@@ -104,8 +104,8 @@ Sprint sonunda aşağıdaki çıktılar elde edilmiştir:
 Sprint hedeflerinin büyük bölümü başarıyla tamamlanmıştır. Ajan mimarisinin beklendiği şekilde çalıştığı görülmüş ve terminal ortamında ilk analizler başarıyla gerçekleştirilmiştir. Bir sonraki sprintte sistemin Streamlit arayüzüne taşınmasına ve kullanıcı etkileşiminin geliştirilmesine karar verilmiştir.
 
 # Sprint Review Katılımcıları
-Product Owner
-Scrum Master
+- Product Owner
+- Scrum Master
 
 
 # Sprint Retrospective
