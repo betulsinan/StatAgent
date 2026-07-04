@@ -73,7 +73,8 @@ Takım üyelerinin farklı ders programlarına sahip olması nedeniyle Daily Scr
 
 <img width="600" height="300" alt="image" src="https://github.com/user-attachments/assets/139ce12d-724f-4355-bd67-272909c31eee" />
 <img width="600" height="450" alt="image" src="https://github.com/user-attachments/assets/cf0d3e1c-df6b-43ed-9a67-7ca3edea18e8" />
-📄 [Daily Scrum Meeting Notes - Sprint 1](./DailyScrumMeetingNotesSprint1.pdf)
+
+📄 [Daily Scrum Meeting Notes - Sprint 1](https://github.com/betulsinan/StatAgent/blob/main/DailyScrumMeetingNotesSprint1.pdf)
 
 
 # Sprint Board Update
