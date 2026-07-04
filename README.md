@@ -73,7 +73,7 @@ Takım üyelerinin farklı ders programlarına sahip olması nedeniyle Daily Scr
 
 <img width="1361" height="744" alt="image" src="https://github.com/user-attachments/assets/139ce12d-724f-4355-bd67-272909c31eee" />
 <img width="1197" height="944" alt="image" src="https://github.com/user-attachments/assets/cf0d3e1c-df6b-43ed-9a67-7ca3edea18e8" />
-
+[Daily Scrum Meeting Notes - Sprint 1](DailyScrumMeetingNotesSprint1.pdf)
 
 
 # Sprint Board Update
@@ -86,7 +86,6 @@ In Progress
 Review
 Done
 
-(Buraya Trello / Jira / GitHub Projects ekran görüntüleri eklenecek.)
 
 # Ürün Durumu
 
@@ -99,7 +98,12 @@ Sprint sonunda aşağıdaki çıktılar elde edilmiştir:
 - CSV dosyaları terminal üzerinden okunarak test edildi.
 - İlk analiz çıktıları başarıyla üretildi.
 
-(Buraya terminal çıktısı veya ekran görüntüleri eklenecek.)
+<img width="1600" height="850" alt="WhatsApp Image 2026-07-03 at 4 54 52 PM (1)" src="https://github.com/user-attachments/assets/0dc2f473-fefb-4c44-846c-08a0a8dec728" />
+<img width="1600" height="850" alt="WhatsApp Image 2026-07-03 at 4 54 52 PM (2)" src="https://github.com/user-attachments/assets/1539a1c2-f2a6-4d30-a11b-392c6d6fbfa1" />
+<img width="1600" height="850" alt="WhatsApp Image 2026-07-03 at 4 54 52 PM (3)" src="https://github.com/user-attachments/assets/3f877a66-6a46-49d4-9edb-1b6c33bb6962" />
+<img width="1600" height="850" alt="WhatsApp Image 2026-07-03 at 4 54 52 PM (4)" src="https://github.com/user-attachments/assets/07d3a36e-98c0-4e4c-aaa5-c5852d7e999f" />
+<img width="1600" height="850" alt="WhatsApp Image 2026-07-03 at 4 54 52 PM" src="https://github.com/user-attachments/assets/6c9d3887-6f80-48b7-89ea-b8e6bcf45a74" />
+
 
 # Sprint Review
 Sprint hedeflerinin büyük bölümü başarıyla tamamlanmıştır. Ajan mimarisinin beklendiği şekilde çalıştığı görülmüş ve terminal ortamında ilk analizler başarıyla gerçekleştirilmiştir. Bir sonraki sprintte sistemin Streamlit arayüzüne taşınmasına ve kullanıcı etkileşiminin geliştirilmesine karar verilmiştir.
@@ -107,7 +111,7 @@ Sprint hedeflerinin büyük bölümü başarıyla tamamlanmıştır. Ajan mimari
 # Sprint Review Katılımcıları
 Product Owner
 Scrum Master
-Tüm geliştiriciler
+
 
 # Sprint Retrospective
 Git commitlerinin daha küçük ve düzenli yapılması kararlaştırıldı.
