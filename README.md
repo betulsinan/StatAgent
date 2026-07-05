@@ -79,7 +79,8 @@ Takım üyelerinin farklı ders programlarına sahip olması nedeniyle Daily Scr
 
 # Sprint Board Update
 
-<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/adeada4a-a798-4b06-93a6-1bc9f3d759ee" />
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/558b7e08-cd6e-4309-b6bd-8c053f86cc69" />
+
 
 
 # Ürün Durumu
