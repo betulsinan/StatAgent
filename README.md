@@ -71,7 +71,7 @@ Bu sprintte tamamlanması hedeflenen çalışmalar:
 
 Takım üyelerinin farklı ders programlarına sahip olması nedeniyle Daily Scrum toplantılarının Slack üzerinden gerçekleştirilmesine karar verilmiştir. Günlük toplantılarda tamamlanan görevler, karşılaşılan problemler ve ertesi gün yapılacak çalışmalar paylaşılmıştır.
 
-<img width="600" height="300" alt="image" src="https://github.com/user-attachments/assets/139ce12d-724f-4355-bd67-272909c31eee" />
+<img width="1335" height="780" alt="Screenshot 2026-07-05 151753" src="https://github.com/user-attachments/assets/38601246-fb70-4c30-b3d2-46c06a64fe09" />
 <img width="600" height="450" alt="image" src="https://github.com/user-attachments/assets/cf0d3e1c-df6b-43ed-9a67-7ca3edea18e8" />
 
 📄 [Daily Scrum Meeting Notes - Sprint 1](https://github.com/betulsinan/StatAgent/blob/main/DailyScrumMeetingNotesSprint1.pdf)
