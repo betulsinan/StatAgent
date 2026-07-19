@@ -114,3 +114,62 @@ Git commitlerinin daha küçük ve düzenli yapılması kararlaştırıldı.
 Kod dokümantasyonunun geliştirilmesine karar verildi.
 Bir sonraki sprintte Streamlit arayüzünün öncelikli geliştirme hedefi olması kararlaştırıldı.
 Memory (ChromaDB) entegrasyonunun Sprint 2'de tamamlanmasına karar verildi.
+
+
+# Sprint 2
+# Sprint Notları
+
+Sprint 2 (6 Temmuz - 19 Temmuz) kapsamında proje, terminal tabanlı bir prototipten kullanıcı dostu, web tabanlı bir ürüne dönüştürülmüştür. Bu sprintte öncelik, Streamlit tabanlı arayüzün geliştirilmesine ve istatistiksel görselleştirme yeteneklerinin güçlendirilmesine verilmiştir. Kılavuzda +15 ekstra puan kazandıran ajan hafızası (ChromaDB) özelliğinin bu sprintte tam olarak tamamlanamayacağı öngörülmüş ve bu iş kalemi Sprint 3'e ertelenmiştir.
+
+# Sprint İçinde Tamamlanması Tahmin Edilen Puan
+100 Puan
+
+# Puan Tamamlama Mantığı
+Toplam Product Backlog yaklaşık 300 puan olarak planlanmıştır. Sprint 2, bootcamp sürecinin ikinci sprinti olduğu için yaklaşık 100 puanlık iş yükü hedeflenmiştir. Story puanları takım üyeleri tarafından ortak değerlendirme ile belirlenmiştir.
+
+# Sprint Backlog
+Bu sprintte tamamlanması hedeflenen çalışmalar:
+- Streamlit tabanlı web arayüzünün tasarlanması ve geliştirilmesi
+- Sürükle-bırak yöntemiyle CSV veri seti yükleme alanının oluşturulması
+- Analiz sonuçlarını gösteren görsel panel (dashboard) tasarımı — yan menüler, butonlar, Markdown formatlı çıktılar
+- Kullanıcının web arayüzü üzerinden ajanlara doğrudan talimat/soru gönderebilmesi
+- Matplotlib/Seaborn ile gelişmiş istatistiksel görselleştirme (bar chart, box plot, dağılım ve anomali grafikleri)
+- Statistics Engine modülünün geliştirilmesi (statistics_engine.py)
+- Uçtan uca analiz akışının bağlanması (analysis.py)
+- ~~ChromaDB tabanlı agent hafızası entegrasyonu~~ → **Sprint 3'e ertelendi**
+- Ortam değişkenlerinin (.env) güvenli şekilde yönetilmesi
+
+# Daily Scrum
+
+Sprint 1'de olduğu gibi Daily Scrum toplantıları Slack üzerinden gerçekleştirilmeye devam edilmiştir. Günlük toplantılarda tamamlanan görevler, karşılaşılan problemler ve ertesi gün yapılacak çalışmalar paylaşılmıştır.
+
+📄 [Daily Scrum Meeting Notes - Sprint 2](LINK_EKLE)
+
+# Sprint Board Update
+
+[EKRAN GÖRÜNTÜSÜ EKLE]
+
+# Ürün Durumu
+
+Sprint sonunda aşağıdaki çıktılar elde edilmiştir:
+- Streamlit tabanlı web arayüzü tamamlandı; kullanıcılar CSV dosyalarını sürükle-bırak ile yükleyebiliyor.
+- Analiz sonuçları görsel panel üzerinden şık butonlar, yan menüler ve Markdown formatında sunuluyor.
+- Kullanıcılar arayüz üzerinden ajanlara doğrudan yeni talimat/soru gönderebiliyor.
+- İstatistiksel analiz motoru (statistics_engine.py) geliştirildi.
+- Matplotlib/Seaborn ile gelişmiş görselleştirme modülleri (visualization.py, graphs.py) entegre edildi; departman bazlı ortalamalar, dağılımlar ve anomaliler grafiklerle gösterilebiliyor.
+- Uçtan uca analiz akışı (analysis.py) bağlandı.
+- ChromaDB tabanlı ajan hafızası bu sprintte tamamlanamamış, kapsam Sprint 3'e taşınmıştır.
+
+[EKRAN GÖRÜNTÜSÜ / GIF EKLE]
+
+# Sprint Review
+Sprint hedeflerinin büyük bölümü başarıyla tamamlanmıştır. Streamlit arayüzü beklenen şekilde çalışmış, kullanıcılar veri yükleyip analiz sonuçlarını görsel olarak inceleyebilir hale gelmiştir. Ajan hafızası (ChromaDB) özelliğinin bu sprintte yetiştirilemeyeceği anlaşılmış ve kapsam planlaması gereği Sprint 3'e ertelenmesine karar verilmiştir. Bir sonraki sprintte öncelik, kısa ve uzun vadeli hafıza entegrasyonu ile ajan orkestrasyonunun tamamlanmasına verilecektir.
+
+# Sprint Review Katılımcıları
+- Product Owner
+- Scrum Master
+
+# Sprint Retrospective
+- .env dosyasının yanlışlıkla commit edilmesi sonucu GitHub Push Protection devreye girmiş; bu konuda .gitignore kullanımı ve hassas bilgi yönetimi konusunda farkındalık artırılmıştır.
+- Memory (ChromaDB) özelliğinin kapsamının Sprint 2 için fazla iddialı olduğu görülmüş, bir sonraki sprint planlamasında iş kalemlerinin daha gerçekçi tahmin edilmesine karar verilmiştir.
+- Commit'lerin daha küçük parçalar halinde ve daha sık yapılmasına karar verilmiştir.
