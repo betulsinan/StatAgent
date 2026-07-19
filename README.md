@@ -143,7 +143,7 @@ Bu sprintte tamamlanması hedeflenen çalışmalar:
 
 Sprint 1'de olduğu gibi Daily Scrum toplantıları Slack üzerinden gerçekleştirilmeye devam edilmiştir. Günlük toplantılarda tamamlanan görevler, karşılaşılan problemler ve ertesi gün yapılacak çalışmalar paylaşılmıştır.
 
-📄 [Daily Scrum Meeting Notes - Sprint 2](LINK_EKLE)
+📄 [Daily Scrum Meeting Notes - Sprint 2](https://github.com/betulsinan/StatAgent/blob/main/DailyScrumMeetingNotesSprint2.pdf)
 
 # Sprint Board Update
 
