@@ -147,7 +147,7 @@ Sprint 1'de olduğu gibi Daily Scrum toplantıları Slack üzerinden gerçekleş
 
 # Sprint Board Update
 
-[EKRAN GÖRÜNTÜSÜ EKLE]
+<img width="1168" height="780" alt="Screenshot 2026-07-19 160612" src="https://github.com/user-attachments/assets/e3eb4a2f-9ecd-4464-8b6d-87846feb5e1c" />
 
 # Ürün Durumu
 
