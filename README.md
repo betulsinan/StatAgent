@@ -160,7 +160,20 @@ Sprint sonunda aşağıdaki çıktılar elde edilmiştir:
 - Uçtan uca analiz akışı (analysis.py) bağlandı.
 - ChromaDB tabanlı ajan hafızası bu sprintte tamamlanamamış, kapsam Sprint 3'e taşınmıştır.
 
-[EKRAN GÖRÜNTÜSÜ / GIF EKLE]
+<img width="1899" height="927" alt="Screenshot 2026-07-19 152227" src="https://github.com/user-attachments/assets/98b72e44-a9d9-4c9a-abe5-e05bb3d9ac82" />
+<img width="1890" height="1021" alt="Screenshot 2026-07-19 152242" src="https://github.com/user-attachments/assets/fba2c740-ecec-4767-a2b6-c64f5a64afb6" />
+<img width="1883" height="1019" alt="Screenshot 2026-07-19 152414" src="https://github.com/user-attachments/assets/1f39a820-9162-4449-ac6c-c6b9f3c9bdf0" />
+<img width="1892" height="1025" alt="Screenshot 2026-07-19 152426" src="https://github.com/user-attachments/assets/2e389d95-1d30-4437-977c-fa8a3027e473" />
+<img width="1890" height="935" alt="Screenshot 2026-07-19 152334" src="https://github.com/user-attachments/assets/00a70ab0-e643-4da9-9817-6f46b2c3ac5e" />
+<img width="1886" height="1014" alt="Screenshot 2026-07-19 152440" src="https://github.com/user-attachments/assets/78ae55a3-5874-4d86-a063-09a622512dd2" />
+<img width="1867" height="964" alt="Screenshot 2026-07-19 152629" src="https://github.com/user-attachments/assets/cc008491-8c6e-4401-851e-9c934f476e5f" />
+<img width="1890" height="1009" alt="Screenshot 2026-07-19 152645" src="https://github.com/user-attachments/assets/22327c3b-4be8-4292-b88b-6d5020096b11" />
+<img width="1875" height="1004" alt="Screenshot 2026-07-19 152700" src="https://github.com/user-attachments/assets/631404a1-19e4-4ce6-9fc1-82e395a1d74a" />
+<img width="1887" height="997" alt="Screenshot 2026-07-19 152719" src="https://github.com/user-attachments/assets/c4c3fa8e-04d7-446a-bf33-ead1b61efa1d" />
+<img width="1891" height="1008" alt="Screenshot 2026-07-19 152732" src="https://github.com/user-attachments/assets/b61223d0-7465-4285-a5cc-8832896778be" />
+
+
+
 
 # Sprint Review
 Sprint hedeflerinin büyük bölümü başarıyla tamamlanmıştır. Streamlit arayüzü beklenen şekilde çalışmış, kullanıcılar veri yükleyip analiz sonuçlarını görsel olarak inceleyebilir hale gelmiştir. Ajan hafızası (ChromaDB) özelliğinin bu sprintte yetiştirilemeyeceği anlaşılmış ve kapsam planlaması gereği Sprint 3'e ertelenmesine karar verilmiştir. Bir sonraki sprintte öncelik, kısa ve uzun vadeli hafıza entegrasyonu ile ajan orkestrasyonunun tamamlanmasına verilecektir.
