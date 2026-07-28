@@ -12,7 +12,7 @@ gemini_llm = "gemini/gemini-2.5-flash"
 # ============================================================
 # 📊 ADIM 1: GERÇEK CSV VERİSİNİ PANDAS İLE YÜKLEME VE ÖZETLEME
 # ============================================================
-csv_dosya_adi = "../maas_verisi.csv"
+csv_dosya_adi = "maas_verisi.csv"
 
 if not os.path.exists(csv_dosya_adi):
     print(f"❌ Hata: {csv_dosya_adi} dosyası bulunamadı! Lütfen dosyayı oluşturun.")
