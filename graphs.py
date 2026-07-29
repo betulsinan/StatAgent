@@ -75,4 +75,4 @@ def correlation_matrix(df):
 
     ax.set_title("Korelasyon Matrisi")
 
-    return fig
+    return fig 

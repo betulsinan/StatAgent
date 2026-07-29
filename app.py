@@ -1,24 +1,22 @@
-import streamlit as st
-import matplotlib.pyplot as plt
 import re
 import traceback
+import matplotlib.pyplot as plt
+import pandas as pd
+import streamlit as st
 
 from analysis import analizi_baslat
-
 from utils import (
     veri_yukle,
     veri_istatistikleri,
     validate_dataframe,
     create_report_download_button
 )
-
 from graphs import (
     histogram,
     boxplot,
     scatter_plot,
     correlation_matrix
 )
-
 from statistics_engine import (
     pearson_test,
     spearman_test,
@@ -32,6 +30,278 @@ from statistics_engine import (
     kruskal_test
 )
 
+# --------------------------------------------------
+# 1. Sayfa Yapılandırması
+# --------------------------------------------------
+st.set_page_config(
+    page_title="StatAgent - Yapay Zekâ Destekli İstatistik Asistanı",
+    page_icon="📊",
+    layout="wide"
+)
+
+# --------------------------------------------------
+# 2. Custom CSS (Strict Light Theme Force)
+# --------------------------------------------------
+st.markdown("""
+<style>
+    /* 1. Tüm Arka Planları Beyaz/Açık Gri Yap */
+    html, body, .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"], [data-testid="stSidebar"] {
+        background-color: #f8f9fa !important;
+    }
+    
+    [data-testid="stSidebar"] {
+        background-color: #ffffff !important;
+        border-right: 1px solid #e0e0e0 !important;
+    }
+
+    /* 2. Bütün Yazı Renklerini Siyah/Koyu Griye Zorla */
+    html, body, .stApp, .stApp *, [data-testid="stSidebar"] * {
+        color: #212529 !important;
+    }
+
+    /* 3. Özel Kartların Yazı Renklerini Koruma (İstisnalar) */
+    .architecture-card, .architecture-card * {
+        color: #ffffff !important;
+    }
+    .architecture-card p, .architecture-card b {
+        color: #e0e6ed !important;
+    }
+
+    /* 4. Metrik Kartları */
+    .metric-card {
+        background: white !important;
+        padding: 16px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        border-left: 5px solid #2a5298;
+        text-align: center;
+    }
+    .metric-title {
+        font-size: 0.85rem !important;
+        color: #6c757d !important;
+        text-transform: uppercase;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+    .metric-value {
+        font-size: 1.6rem !important;
+        font-weight: 700;
+        color: #1e3c72 !important;
+    }
+
+    /* 5. Sistem Mimarisi Kartı */
+    .architecture-card {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%) !important;
+        padding: 15px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+    }
+    .architecture-card h4 {
+        color: #ffffff !important;
+        margin-top: 0;
+        font-size: 0.95rem;
+        font-weight: 700;
+    }
+</style>
+""", unsafe_allow_html=True)
+# --------------------------------------------------
+# 3. Çok Dilli Sözlük Altyapısı (i18n)
+# --------------------------------------------------
+TEXTS = {
+    "TR": {
+        "title": "📊 StatAgent",
+        "subtitle": "Yapay zekâ destekli istatistiksel veri analizi platformu",
+        "description": "CSV veya Excel dosyanızı yükleyin ve istatistiksel sorunuzu doğal dilde yazın. StatAgent sizin için uygun analizi belirlesin, çalıştırsın ve profesyonel raporunuza dönüştürsün.",
+        "arch_title": "🚀 Sistem Mimarisi",
+        "guide_title": "📋 Hızlı Kullanım Rehberi",
+        "guide_1": "1. **📁 Veri Yükle:** CSV veya Excel dosyanı yükle.",
+        "guide_2": "2. **🔍 Kontrol:** Otomatik eksik veri analizini incele.",
+        "guide_3": "3. **💬 Soru Sor:** İstatistiksel hipotezini yaz.",
+        "guide_4": "4. **📄 Rapor Al:** Profesyonel PDF çıktını indir.",
+        "tip": "💡 **Biyoistatistik İpucu**\n\nParametrik testlerin geçerliliği için eksik verileri ve dağılım grafiklerini analiz öncesinde mutlaka kontrol edin.",
+        "upload_label": "📁 CSV veya Excel dosyanızı yükleyin",
+        "missing_warning": "⚠️ **Veri Setinde Eksik Veriler Tespit Edildi!**",
+        "summary_title": "📊 Veri Seti Özet Bilgileri",
+        "rows": "Toplam Satır",
+        "cols": "Toplam Sütun",
+        "num_vars": "Sayısal Değişken",
+        "cat_vars": "Kategorik Değişken",
+        "missing": "Eksik Veri",
+        "preview": "🔍 Veri Setinin İlk 5 Satırını İncele",
+        "question_title": "💬 Analiz Sorusu",
+        "question_placeholder": "Örnek: Eğitim yılı ile maaş arasında anlamlı bir ilişki var mı?",
+        "start_button": "🚀 Analizi Başlat",
+        "status_main": "🤖 **StatAgent Ajanları Çalışıyor...**",
+        "status_1": "🔍 **1. Veri Doğrulama Ajanı:** Kontrol ediliyor...",
+        "status_2": "📊 **2. İstatistikçi Ajan:** p-değeri hesaplanıyor...",
+        "status_3": "📝 **3. Raporlayıcı Ajan:** PDF hazırlanıyor...",
+        "status_complete": "✅ **Analiz Tamamlandı!**",
+        "no_file_error": "❌ Lütfen önce bir CSV veya Excel dosyası yükleyin.",
+        "no_q_warning": "⚠️ Lütfen analiz etmek istediğiniz soruyu yazın.",
+        "ai_instruction": ""
+    },
+    "EN": {
+        "title": "📊 StatAgent",
+        "subtitle": "AI-Powered Statistical Data Analysis Platform",
+        "description": "Upload your CSV or Excel file and write your statistical question in natural language. StatAgent will determine the appropriate test, execute it, and turn it into your professional report.",
+        "arch_title": "🚀 System Architecture",
+        "guide_title": "📋 Quick User Guide",
+        "guide_1": "1. **📁 Upload Data:** Upload CSV or Excel file.",
+        "guide_2": "2. **🔍 Validate:** Review automatic missing data analysis.",
+        "guide_3": "3. **💬 Ask Question:** Type your statistical hypothesis.",
+        "guide_4": "4. **📄 Get Report:** Download professional PDF output.",
+        "tip": "💡 **Biostatistics Tip**\n\nCheck missing values and distribution plots prior to parametric testing.",
+        "upload_label": "📁 Upload your CSV or Excel file",
+        "missing_warning": "⚠️ **Missing Data Detected in Dataset!**",
+        "summary_title": "📊 Dataset Summary Metrics",
+        "rows": "Total Rows",
+        "cols": "Total Columns",
+        "num_vars": "Numeric Variables",
+        "cat_vars": "Categorical Variables",
+        "missing": "Missing Values",
+        "preview": "🔍 Preview First 5 Rows of Dataset",
+        "question_title": "💬 Analysis Question",
+        "question_placeholder": "Example: Is there a significant relationship between education years and salary?",
+        "start_button": "🚀 Start Analysis",
+        "status_main": "🤖 **StatAgent Agents Working...**",
+        "status_1": "🔍 **1. Validation Agent:** Checking data...",
+        "status_2": "📊 **2. Statistician Agent:** Computing p-value...",
+        "status_3": "📝 **3. Reporter Agent:** Generating PDF...",
+        "status_complete": "✅ **Analysis Completed!**",
+        "no_file_error": "❌ Please upload a CSV or Excel file first.",
+        "no_q_warning": "⚠️ Please enter the question you want to analyze.",
+        "ai_instruction": " (Please write the analysis report strictly in English with an academic tone)"
+    },
+    "DE": {
+        "title": "📊 StatAgent",
+        "subtitle": "KI-gestützte Plattform für statistische Datenanalyse",
+        "description": "Laden Sie Ihre CSV- oder Excel-Datei hoch und formulieren Sie Ihre statistische Frage. StatAgent führt die passende Analyse durch und erstellt einen professionellen Bericht.",
+        "arch_title": "🚀 Systemarchitektur",
+        "guide_title": "📋 Schnellanleitung",
+        "guide_1": "1. **📁 Daten Hochladen:** CSV- oder Excel-Datei hochladen.",
+        "guide_2": "2. **🔍 Überprüfen:** Fehlende Werte automatisch analysieren.",
+        "guide_3": "3. **💬 Frage Stellen:** Statistische Hypothese eingeben.",
+        "guide_4": "4. **📄 Bericht Erhalten:** Professionelles PDF herunterladen.",
+        "tip": "💡 **Biostatistik-Tipp**\n\nÜberprüfen Sie vor parametrischen Tests stets fehlende Werte und Verteilungsdiagramme.",
+        "upload_label": "📁 CSV- oder Excel-Datei hochladen",
+        "missing_warning": "⚠️ **Fehlende Daten im Datensatz erkannt!**",
+        "summary_title": "📊 Datensatz-Zusammenfassung",
+        "rows": "Gesamte Zeilen",
+        "cols": "Gesamte Spalten",
+        "num_vars": "Numerische Variablen",
+        "cat_vars": "Kategoriale Variablen",
+        "missing": "Fehlende Werte",
+        "preview": "🔍 Vorschau der ersten 5 Zeilen",
+        "question_title": "💬 Analysefrage",
+        "question_placeholder": "Beispiel: Gibt es einen signifikanten Zusammenhang zwischen Ausbildungsjahren und Gehalt?",
+        "start_button": "🚀 Analyse Starten",
+        "status_main": "🤖 **StatAgent-Agenten arbeiten...**",
+        "status_1": "🔍 **1. Validierungsagent:** Daten werden geprüft...",
+        "status_2": "📊 **2. Statistik-Agent:** p-Wert wird berechnet...",
+        "status_3": "📝 **3. Berichtsagent:** PDF wird erstellt...",
+        "status_complete": "✅ **Analyse abgeschlossen!**",
+        "no_file_error": "❌ Bitte laden Sie zuerst eine CSV- oder Excel-Datei hoch.",
+        "no_q_warning": "⚠️ Bitte geben Sie Ihre Analysefrage ein.",
+        "ai_instruction": " (Bitte schreiben Sie den Analysebericht streng auf Deutsch in akademischem Ton)"
+    },
+    "FR": {
+        "title": "📊 StatAgent",
+        "subtitle": "Plateforme d'analyse statistique assistée par IA",
+        "description": "Téléchargez votre fichier CSV ou Excel et posez votre question statistique. StatAgent exécutera l'analyse appropriée et générera votre rapport professionnel.",
+        "arch_title": "🚀 Architecture Système",
+        "guide_title": "📋 Guide Rapide",
+        "guide_1": "1. **📁 Charger Données:** Importer fichier CSV ou Excel.",
+        "guide_2": "2. **🔍 Vérifier:** Analyser automatiquement les données manquantes.",
+        "guide_3": "3. **💬 Poser Question:** Saisir votre hypothèse statistique.",
+        "guide_4": "4. **📄 Obtenir Rapport:** Télécharger le rapport PDF.",
+        "tip": "💡 **Conseil Biostatistique**\n\nVérifiez les valeurs manquantes et la distribution avant les tests paramétriques.",
+        "upload_label": "📁 Téléchargez votre fichier CSV ou Excel",
+        "missing_warning": "⚠️ **Données manquantes détectées!**",
+        "summary_title": "📊 Résumé du jeu de données",
+        "rows": "Lignes Totales",
+        "cols": "Colonnes Totales",
+        "num_vars": "Variables Numériques",
+        "cat_vars": "Variables Catégorielles",
+        "missing": "Valeurs Manquantes",
+        "preview": "🔍 Aperçu des 5 premières lignes",
+        "question_title": "💬 Question d'analyse",
+        "question_placeholder": "Exemple: Existe-t-il une relation significative entre les années d'études et le salaire?",
+        "start_button": "🚀 Lancer l'Analyse",
+        "status_main": "🤖 **Agents StatAgent en cours...**",
+        "status_1": "🔍 **1. Agent Validation:** Vérification...",
+        "status_2": "📊 **2. Agent Statistique:** Calcul de la p-valeur...",
+        "status_3": "📝 **3. Agent Rapport:** Génération du PDF...",
+        "status_complete": "✅ **Analyse terminée!**",
+        "no_file_error": "❌ Veuillez d'abord télécharger un fichier CSV ou Excel.",
+        "no_q_warning": "⚠️ Veuillez saisir votre question d'analyse.",
+        "ai_instruction": " (Veuillez rédiger le rapport d'analyse strictement en français sur un ton académique)"
+    },
+    "IT": {
+        "title": "📊 StatAgent",
+        "subtitle": "Piattaforma di analisi dati statistici con IA",
+        "description": "Carica il tuo file CSV o Excel e scrivi la tua domanda in linguaggio naturale. StatAgent eseguirà l'analisi adeguata e genererà il tuo report professionale.",
+        "arch_title": "🚀 Architettura Sistema",
+        "guide_title": "📋 Guida Rapida",
+        "guide_1": "1. **📁 Carica Dati:** Carica file CSV o Excel.",
+        "guide_2": "2. **🔍 Controlla:** Analisi automatica dei dati mancanti.",
+        "guide_3": "3. **💬 Fai Domanda:** Scrivi la tua ipotesi statistica.",
+        "guide_4": "4. **📄 Scarica Report:** Scarica il report in PDF.",
+        "tip": "💡 **Suggerimento Biostatistica**\n\nVerifica i valori mancanti e i grafici di distribuzione prima dei test parametrici.",
+        "upload_label": "📁 Carica il tuo file CSV o Excel",
+        "missing_warning": "⚠️ **Dati mancanti rilevati nel set di dati!**",
+        "summary_title": "📊 Riepilogo del set di dati",
+        "rows": "Righe Totali",
+        "cols": "Colonne Totali",
+        "num_vars": "Variabili Numeriche",
+        "cat_vars": "Variabili Categoriali",
+        "missing": "Valori Mancanti",
+        "preview": "🔍 Anteprima prime 5 righe",
+        "question_title": "💬 Domanda di analisi",
+        "question_placeholder": "Esempio: Esiste una relazione significativa tra anni di studio e stipendio?",
+        "start_button": "🚀 Avvia Analisi",
+        "status_main": "🤖 **Agenti StatAgent al lavoro...**",
+        "status_1": "🔍 **1. Agente Validazione:** Controllo dati...",
+        "status_2": "📊 **2. Agente Statistico:** Calcolo p-value...",
+        "status_3": "📝 **3. Agente Report:** Creazione PDF...",
+        "status_complete": "✅ **Analisi Completata!**",
+        "no_file_error": "❌ Carica prima un file CSV o Excel.",
+        "no_q_warning": "⚠️ Inserisci la domanda da analizzare.",
+        "ai_instruction": " (Si prega di redigere il rapporto di analisi rigorosamente in italiano con un tono accademico)"
+    },
+    "ZH": {
+        "title": "📊 StatAgent",
+        "subtitle": "人工智能驱动的统计数据分析平台",
+        "description": "上传您的 CSV 或 Excel 文件，用自然语言输入您的统计问题。StatAgent 将为您确定合适的测试并生成专业报告。",
+        "arch_title": "🚀 系统架构",
+        "guide_title": "📋 快速使用指南",
+        "guide_1": "1. **📁 上传数据:** 上传 CSV 或 Excel 文件。",
+        "guide_2": "2. **🔍 检查数据:** 自动查看缺失值分析。",
+        "guide_3": "3. **💬 提出问题:** 输入您的统计假设。",
+        "guide_4": "4. **📄 获取报告:** 下载专业 PDF 报告。",
+        "tip": "💡 **生物统计学提示**\n\n在进行参数检验之前，请务必检查缺失值和分布图。",
+        "upload_label": "📁 上传您的 CSV 或 Excel 文件",
+        "missing_warning": "⚠️ **数据集中检测到缺失数据！**",
+        "summary_title": "📊 数据集摘要信息",
+        "rows": "总行数",
+        "cols": "总列数",
+        "num_vars": "数值变量",
+        "cat_vars": "分类变量",
+        "missing": "缺失值",
+        "preview": "🔍 预览数据集前 5 行",
+        "question_title": "💬 分析问题",
+        "question_placeholder": "例如：受教育年限与薪资之间是否存在显著关系？",
+        "start_button": "🚀 开始分析",
+        "status_main": "🤖 **StatAgent 智能体工作中...**",
+        "status_1": "🔍 **1. 数据验证智能体:** 正在检查...",
+        "status_2": "📊 **2. 统计师智能体:** 正在计算 p 值...",
+        "status_3": "📝 **3. 报告智能体:** 正在生成 PDF...",
+        "status_complete": "✅ **分析完成！**",
+        "no_file_error": "❌ 请先上传 CSV 或 Excel 文件。",
+        "no_q_warning": "⚠️ 请输入您想要分析的问题。",
+        "ai_instruction": " (请严格使用中文和学术语气撰写分析报告)"
+    }
+}
+
 def kodu_ayir(metin):
     pattern = r"```(?:python)?\s*(.*?)```"
     eslesme = re.search(pattern, metin, re.DOTALL | re.IGNORECASE)
@@ -43,281 +313,163 @@ def kodu_ayir(metin):
 
     return metin, None
 
-# ------------------------------------
-# Session State
-# ------------------------------------
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
 # --------------------------------------------------
-# Sayfa Ayarları
-# --------------------------------------------------
-st.set_page_config(
-    page_title="StatAgent",
-    page_icon="📊",
-    layout="wide"
-)
-
-# --------------------------------------------------
-# Sidebar
+# Sidebar (Yan Menü & Dil Seçimi)
 # --------------------------------------------------
 with st.sidebar:
-    st.title("📊 StatAgent")
-    st.markdown("""
-### Yapay Zekâ Destekli Veri Analizi
+    # 🌐 Dil Seçim Kutusu
+    lang_map = {
+        "Türkçe 🇹🇷": "TR",
+        "English 🇬🇧": "EN",
+        "Deutsch 🇩🇪": "DE",
+        "Français 🇫🇷": "FR",
+        "Italiano 🇮🇹": "IT",
+        "中文 🇨🇳": "ZH"
+    }
+    selected_lang_label = st.selectbox("🌐 Language / Dil", list(lang_map.keys()), index=0)
+    lang_code = lang_map[selected_lang_label]
+    t = TEXTS[lang_code]
 
-StatAgent;
+    st.title(t["title"])
+    st.caption("v1.0.0 | Enterprise SaaS Edition")
+    
+    st.markdown(f"""
+    <div class="architecture-card">
+        <h4>{t["arch_title"]}</h4>
+        <p><b>1. UI:</b> Streamlit Dynamic Interface</p>
+        <p><b>2. Multi-Agent:</b> CrewAI Engine</p>
+        <p><b>3. AI Model:</b> Google Gemini 2.5</p>
+        <p><b>4. Output:</b> ReportLab PDF Generator</p>
+    </div>
+    """, unsafe_allow_html=True)
 
-✅ CSV / Excel dosyalarını analiz eder.
+    st.markdown(f"""
+### {t["guide_title"]}
 
-✅ En uygun istatistiksel testi belirler.
-
-✅ Sonuçları yapay zekâ ile yorumlar.
-
-✅ Grafik ve rapor oluşturur.
+{t["guide_1"]}
+{t["guide_2"]}
+{t["guide_3"]}
+{t["guide_4"]}
 """)
     st.divider()
-    st.info(
-        "💡 İpucu\n\n"
-        "Önce veri dosyanızı yükleyin, ardından analiz etmek istediğiniz soruyu yazın."
-    )
+    st.info(t["tip"])
 
 # --------------------------------------------------
-# Ana Sayfa
+# Ana Başlık
 # --------------------------------------------------
-st.title("📊 StatAgent")
-st.caption("Yapay zekâ destekli istatistiksel veri analizi platformu")
+st.title(t["title"])
+st.caption(t["subtitle"])
 
-st.markdown("""
-CSV veya Excel dosyanızı yükleyin ve istatistiksel sorunuzu doğal dilde yazın.
-
-StatAgent sizin için uygun analizi belirlesin, çalıştırsın ve sonuçları yorumlasın.
-""")
+st.markdown(t["description"])
 
 st.divider()
 
-# --------------------------------------------------
-# Dosya Yükleme
-# --------------------------------------------------
 uploaded_file = st.file_uploader(
-    "📁 CSV veya Excel dosyanızı yükleyin",
+    t["upload_label"],
     type=["csv", "xlsx"]
 )
 
-# --------------------------------------------------
-# Dosya Yüklendi
-# --------------------------------------------------
 if uploaded_file is not None:
-
     df = veri_yukle(uploaded_file)
-
-    # Sprint 3 - Veri Doğrulama ve Eksik Veri Kontrolü
     is_valid, msg, missing_info = validate_dataframe(df)
     if not is_valid:
         st.error(f"❌ {msg}")
         st.stop()
 
-    # Eğer eksik veri varsa ekrana şık bir uyarı kutusu koyuyoruz
     if missing_info:
-        with st.warning("⚠️ **Veri Setinde Eksik Veriler Tespit Edildi!**"):
-            st.write("Aşağıdaki sütunlarda eksik değerler bulunmaktadır. İstatistiksel testlerin doğruluğu için dikkat edin:")
+        with st.warning(t["missing_warning"]):
+            st.write("Aşağıdaki sütunlarda eksik değerler bulunmaktadır:")
             for info in missing_info:
                 st.markdown(info)
 
     istatistikler = veri_istatistikleri(df)
 
-    st.success("✅ Dosya başarıyla yüklendi!")
-
-    st.subheader("📋 Veri Seti Özeti")
-
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.metric(label="📄 Dosya", value=uploaded_file.name)
-    with col2:
-        st.metric(label="📈 Satır", value=df.shape[0])
-    with col3:
-        st.metric(label="📊 Sütun", value=df.shape[1])
-
-    st.divider()
-
-    st.subheader("📈 Veri Özeti")
-
-    c1, c2, c3 = st.columns(3)
-    with c1:
-        st.metric("🔢 Sayısal Değişken", istatistikler["Sayısal Değişken"])
-    with c2:
-        st.metric("📝 Kategorik Değişken", istatistikler["Kategorik Değişken"])
-    with c3:
-        st.metric("❗ Eksik Veri", istatistikler["Eksik Veri"])
-
-    st.divider()
-
-    st.subheader("📌 Sütun İsimleri")
-    st.write(", ".join(df.columns))
-
-    st.divider()
-
-    st.subheader("🔍 İlk 5 Satır")
-    st.dataframe(df.head(), use_container_width=True)
-
-    st.divider()
-
-    tab1, tab2, tab3, tab4 = st.tabs([
-        "📊 Histogram",
-        "📦 Box Plot",
-        "📈 Scatter",
-        "🔥 Korelasyon"
-    ])
+    st.markdown(f"### {t['summary_title']}")
+    col1, col2, col3, col4, col5 = st.columns(5)
     
+    with col1:
+        st.markdown(f'<div class="metric-card" style="border-left-color: #4e73df;"><div class="metric-title">{t["rows"]}</div><div class="metric-value">{df.shape[0]}</div></div>', unsafe_allow_html=True)
+    with col2:
+        st.markdown(f'<div class="metric-card" style="border-left-color: #1cc88a;"><div class="metric-title">{t["cols"]}</div><div class="metric-value">{df.shape[1]}</div></div>', unsafe_allow_html=True)
+    with col3:
+        st.markdown(f'<div class="metric-card" style="border-left-color: #36b9cc;"><div class="metric-title">{t["num_vars"]}</div><div class="metric-value">{istatistikler["Sayısal Değişken"]}</div></div>', unsafe_allow_html=True)
+    with col4:
+        st.markdown(f'<div class="metric-card" style="border-left-color: #f6c23e;"><div class="metric-title">{t["cat_vars"]}</div><div class="metric-value">{istatistikler["Kategorik Değişken"]}</div></div>', unsafe_allow_html=True)
+    with col5:
+        eksik_renk = "#e74a3b" if istatistikler['Eksik Veri'] > 0 else "#858796"
+        st.markdown(f'<div class="metric-card" style="border-left-color: {eksik_renk};"><div class="metric-title">{t["missing"]}</div><div class="metric-value" style="color: {eksik_renk};">{istatistikler["Eksik Veri"]}</div></div>', unsafe_allow_html=True)
+    
+    st.markdown("---")
+
+    with st.expander(t["preview"], expanded=False):
+        st.dataframe(df.head(), use_container_width=True)
+
+    tab1, tab2, tab3, tab4 = st.tabs(["📊 Histogram", "📦 Box Plot", "📈 Scatter Plot", "🔥 Korelasyon"])
     numeric_cols = df.select_dtypes(include="number").columns
 
     with tab1:
-        st.subheader("📊 Histogram")
-        if len(numeric_cols) == 0:
-            st.warning("⚠️ Histogram için veri setinde sayısal sütun bulunamadı.")
-        else:
+        if len(numeric_cols) > 0:
             hist_col = st.selectbox("Sütun seç", numeric_cols, key="hist")
-            try:
-                fig = histogram(df, hist_col)
-                if fig:
-                    st.pyplot(fig)
-                    plt.close(fig)
-            except Exception as e:
-                st.error(f"❌ Histogram oluşturulamadı.\n\nSebep: {e}")
-
+            fig = histogram(df, hist_col)
+            if fig: st.pyplot(fig)
     with tab2:
-        st.subheader("📦 Box Plot")
-        if len(numeric_cols) == 0:
-            st.warning("⚠️ Box Plot için veri setinde sayısal sütun bulunamadı.")
-        else:
+        if len(numeric_cols) > 0:
             box_col = st.selectbox("Sütun seç", numeric_cols, key="box")
-            try:
-                fig = boxplot(df, box_col)
-                if fig:
-                    st.pyplot(fig)
-                    plt.close(fig)
-            except Exception as e:
-                st.error(f"❌ Box Plot oluşturulamadı.\n\nSebep: {e}")
-
+            fig = boxplot(df, box_col)
+            if fig: st.pyplot(fig)
     with tab3:
-        st.subheader("📈 Scatter Plot")
-        if len(numeric_cols) < 2:
-            st.warning("⚠️ Scatter Plot için en az iki sayısal sütun gereklidir.")
-        else:
+        if len(numeric_cols) >= 2:
             sc_col1, sc_col2 = st.columns(2)
-            with sc_col1:
-                x_col = st.selectbox("X ekseni", numeric_cols, key="x")
-            with sc_col2:
-                y_col = st.selectbox("Y ekseni", numeric_cols, key="y")
-
-            if x_col == y_col:
-                st.info("ℹ️ Scatter Plot için iki farklı sütun seçmelisin.")
-            else:
-                try:
-                    fig = scatter_plot(df, x_col, y_col)
-                    if fig:
-                        st.pyplot(fig)
-                        plt.close(fig)
-                except Exception as e:
-                    st.error(f"❌ Scatter Plot oluşturulamadı.\n\nSebep: {e}")
-
+            x_col = sc_col1.selectbox("X ekseni", numeric_cols, key="x")
+            y_col = sc_col2.selectbox("Y ekseni", numeric_cols, key="y")
+            if x_col != y_col:
+                fig = scatter_plot(df, x_col, y_col)
+                if fig: st.pyplot(fig)
     with tab4:
-        st.subheader("🔥 Korelasyon Matrisi")
-        if len(numeric_cols) < 2:
-            st.warning("⚠️ Korelasyon analizi için en az iki sayısal sütun gereklidir.")
-        else:
-            try:
-                fig = correlation_matrix(df)
-                if fig:
-                    st.pyplot(fig)
-                    plt.close(fig)
-            except Exception as e:
-                st.error(f"❌ Korelasyon matrisi oluşturulamadı.\n\nSebep: {e}")
+        if len(numeric_cols) >= 2:
+            fig = correlation_matrix(df)
+            if fig: st.pyplot(fig)
 
-# --------------------------------------------------
-# Kullanıcı Sorusu
-# --------------------------------------------------
 st.divider()
-st.subheader("💬 Analiz Sorusu")
+st.subheader(t["question_title"])
+question = st.text_area("", placeholder=t["question_placeholder"])
 
-question = st.text_area(
-    "",
-    placeholder="Örnek: Eğitim yılı ile maaş arasında anlamlı bir ilişki var mı?"
-)
-
-# --------------------------------------------------
-# Analiz Butonu
-# --------------------------------------------------
-if st.button("🚀 Analizi Başlat", use_container_width=True):
-
+if st.button(t["start_button"], use_container_width=True):
     if uploaded_file is None:
-        st.error("❌ Lütfen önce bir CSV veya Excel dosyası yükleyin.")
-
+        st.error(t["no_file_error"])
     elif question.strip() == "":
-        st.warning("⚠️ Lütfen analiz etmek istediğiniz soruyu yazın.")
-
+        st.warning(t["no_q_warning"])
     else:
-        with st.spinner("🤖 StatAgent analiz yapıyor..."):
+        status_box = st.status(t["status_main"], expanded=True)
+        with status_box:
+            st.write(t["status_1"])
+            st.write(t["status_2"])
+            st.write(t["status_3"])
             try:
-                sonuc = analizi_baslat(df, question)
+                # Seçilen dile göre AI modeline yönlendirme ekle
+                prompt_q = question + t["ai_instruction"]
+                sonuc = analizi_baslat(df, prompt_q)
                 rapor = sonuc["rapor"]
                 test_sonucu = sonuc["analiz"]
+                status_box.update(label=t["status_complete"], state="complete", expanded=False)
 
-                st.success("✅ Analiz tamamlandı!")
                 st.divider()
-                st.subheader("📊 Analiz Sonucu")
-
-                # Kodu ve metni ayır
                 metin, kod = kodu_ayir(rapor)
-
-                # Analiz açıklaması
                 with st.container(border=True):
                     st.markdown(metin)
                     st.divider()
-                    # Sprint 3 - Rapor İndirme Butonu
                     create_report_download_button(rapor)
 
                 if test_sonucu is not None:
-                    st.divider()
-                    st.subheader("📈 Gerçek İstatistiksel Sonuç")
-
-                    res_col1, res_col2 = st.columns(2)
-                    with res_col1:
-                        st.metric("Test", test_sonucu["test"])
-                        st.metric("Test İstatistiği", test_sonucu["istatistik"])
-                    with res_col2:
-                        st.metric("p-değeri", test_sonucu["p"])
-                        st.metric("Karar", test_sonucu["karar"])
-
+                    st.metric("Test", test_sonucu["test"])
+                    st.metric("p-değeri", test_sonucu["p"])
                     st.info(test_sonucu["yorum"])
 
-                    if test_sonucu.get("varsayimlar"):
-                        st.markdown("### 📋 Varsayımlar")
-                        for v in test_sonucu["varsayimlar"]:
-                            st.write(f"• {v}")
-
-                # Python kodu varsa açılır kutuda göster
-                if kod:
-                    with st.expander("💻 Kullanılan Python Kodu"):
-                        st.code(kod, language="python")
-
-                # Geçmişe ekle
-                st.session_state.chat_history.append({
-                    "question": question,
-                    "answer": rapor
-                })
-
             except Exception as e:
+                status_box.update(label="❌ Hata Oluştu", state="error")
                 st.error("🚨 Yapay zekâ servisine şu anda ulaşılamıyor.")
                 with st.expander("Teknik hata ayrıntısı"):
-                    st.code(traceback.format_exc())
-
-# ------------------------------------
-# Önceki Analizler
-# ------------------------------------
-if st.session_state.chat_history:
-    st.divider()
-    st.subheader("📝 Analiz Geçmişi")
-    for chat in reversed(st.session_state.chat_history):
-        with st.expander(f"💬 {chat['question']}"):
-            st.write(chat["answer"])
+                    st.code(traceback.format_exc())  
