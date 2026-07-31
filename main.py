@@ -88,7 +88,7 @@ ekip = Crew(
 print("\n🚀 Ekip çalışmaya başlıyor...\n")
 sonuc = ekip.kickoff()
 
-rapor = sonuc.tasks_output[1].raw
+rapor = sonuc.tasks_output[0].raw
 
 print("\n🎯 --- NİHAİ ANALİZ METODOLOJİSİ --- 🎯\n")
 print(sonuc)
