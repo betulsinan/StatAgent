@@ -1,21 +1,21 @@
 import os
 from dotenv import load_dotenv
 from crewai import Agent
-
+from memory import retrieve_memory
 # --------------------------------------------------
 # API KEY
 # --------------------------------------------------
 
+import os
+from dotenv import load_dotenv
+from crewai import Agent, LLM
+
 load_dotenv()
-os.environ["GEMINI_API_KEY"] = os.getenv("GEMINI_API_KEY")
 
-# --------------------------------------------------
-# Model
-# --------------------------------------------------
-
-gemini_llm = "gemini/gemini-2.5-flash"
-
-
+gemini_llm = LLM(
+    model="openrouter/deepseek/deepseek-chat-v3",
+    api_key=os.getenv("GEMINI_API_KEY")
+)
 # ==================================================
 # İSTATİSTİK UZMANI
 # ==================================================

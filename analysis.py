@@ -1,6 +1,11 @@
 from utils import veri_ozeti_olustur
 from tasks import gorevleri_olustur
 from crewai import Crew, Process
+from memory import (
+    get_dataset_id,
+    retrieve_memory,
+    save_analysis
+)
 print("ANALYSIS.PY ÇALIŞTI")
 from statistics_engine import (
     pearson_test,
@@ -18,24 +23,18 @@ import re
 import json
 
 def json_bul(metin):
+    # Try fenced JSON first
+    match = re.search(r"```json\s*(.*?)```", metin, re.DOTALL)
+    if match:
+        return json.loads(match.group(1))
 
-    eslesmeler = re.findall(r"```json(.*?)```", metin, re.DOTALL)
-
-    print("=" * 80)
-    print("Bulunan JSON sayısı:", len(eslesmeler))
-
-    for json_str in eslesmeler:
-
-        print("JSON ADAYI:")
-        print(json_str)
-
-        try:
-            return json.loads(json_str.strip())
-
-        except Exception as e:
-            print("JSON okunamadı:", e)
+    # Fallback: plain JSON object
+    match = re.search(r"\{[\s\S]*?\}", metin)
+    if match:
+        return json.loads(match.group(0))
 
     return None
+
 
 # -------------------------------------------------
 # Testi Bul
@@ -95,19 +94,26 @@ def analizi_baslat(df, kullanici_sorusu):
     sutunlar = list(df.columns)
 
     veri_ornegi = df.head().to_markdown(index=False)
+    dataset_id = get_dataset_id(df)
 
+    previous_memory = retrieve_memory(
+    dataset_id,
+    kullanici_sorusu
+)
     gorevler, istatistik_ajani, kodcu_ajan = gorevleri_olustur(
-        kullanici_sorusu,
-        veri_ozeti,
-        sutunlar,
-        veri_ornegi
-    )
+    kullanici_sorusu,
+    veri_ozeti,
+    sutunlar,
+    veri_ornegi,
+    previous_memory
+)
 
     ekip = Crew(
         agents=[istatistik_ajani, kodcu_ajan],
         tasks=gorevler,
         process=Process.sequential,
-        verbose=True
+        verbose=True,
+        memory=True
     )
 
     sonuc = ekip.kickoff()
@@ -121,15 +127,22 @@ def analizi_baslat(df, kullanici_sorusu):
     print("\n__dict__:")
     if hasattr(sonuc, "__dict__"):
         print(sonuc.__dict__)
-    sonuc_metin = sonuc.raw if hasattr(sonuc, "raw") else str(sonuc)
-    json_veri = json_bul(sonuc_metin)
-    print("JSON VERİ:", json_veri)
-    sonuc = ekip.kickoff()
+    
+    if len(sonuc.tasks_output) < 2:
+        raise Exception("CrewAI did not return two task outputs.")
 
-    print("="*80)
-    print(type(sonuc))
-    print(dir(sonuc))
-    print("="*80)
+    task1_output = sonuc.tasks_output[0].raw
+    task2_output = sonuc.tasks_output[1].raw
+    print("\n========= TASK2 OUTPUT =========")
+    print(task2_output)
+    print("================================\n")
+
+    json_veri = json_bul(task1_output)
+    rapor = task2_output
+    print("JSON VERİ:", json_veri)
+    print("TASK SAYISI:", len(sonuc.tasks_output))
+
+    
     
     # -------------------------------------------------
     # Seçilen testi bul
@@ -217,8 +230,9 @@ def analizi_baslat(df, kullanici_sorusu):
     df,
     json_veri["group"],
     json_veri["value"]
-)
-             
+)  
+   
+    
     # -------------------------------------------------
     # Gerçek sonuçları ekrana yazdır
     # -------------------------------------------------
@@ -226,8 +240,13 @@ def analizi_baslat(df, kullanici_sorusu):
     if analiz_sonucu:
 
         print(analiz_sonucu)
-
+    save_analysis(
+    dataset_id,
+    kullanici_sorusu,
+    rapor,
+    analiz_sonucu
+)
     return {
-    "rapor": sonuc_metin,
+    "rapor": rapor,
     "analiz": analiz_sonucu
 }    

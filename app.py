@@ -5,6 +5,8 @@ import pandas as pd
 import streamlit as st
 
 from analysis import analizi_baslat
+from memory import save_analysis, retrieve_memory
+
 from utils import (
     veri_yukle,
     veri_istatistikleri,
@@ -44,64 +46,44 @@ st.set_page_config(
 # --------------------------------------------------
 st.markdown("""
 <style>
-    /* 1. Tüm Arka Planları Beyaz/Açık Gri Yap */
-    html, body, .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"], [data-testid="stSidebar"] {
-        background-color: #f8f9fa !important;
-    }
-    
-    [data-testid="stSidebar"] {
-        background-color: #ffffff !important;
-        border-right: 1px solid #e0e0e0 !important;
-    }
 
-    /* 2. Bütün Yazı Renklerini Siyah/Koyu Griye Zorla */
-    html, body, .stApp, .stApp *, [data-testid="stSidebar"] * {
-        color: #212529 !important;
-    }
+/* Genel görünüm */
+.metric-card {
+    background: var(--secondary-background-color);
+    color: var(--text-color);
+    padding: 16px;
+    border-radius: 12px;
+    border-left: 5px solid var(--primary-color);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    text-align: center;
+}
 
-    /* 3. Özel Kartların Yazı Renklerini Koruma (İstisnalar) */
-    .architecture-card, .architecture-card * {
-        color: #ffffff !important;
-    }
-    .architecture-card p, .architecture-card b {
-        color: #e0e6ed !important;
-    }
+.metric-title{
+    font-size:0.85rem;
+    font-weight:600;
+    opacity:0.75;
+    text-transform:uppercase;
+}
 
-    /* 4. Metrik Kartları */
-    .metric-card {
-        background: white !important;
-        padding: 16px;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        border-left: 5px solid #2a5298;
-        text-align: center;
-    }
-    .metric-title {
-        font-size: 0.85rem !important;
-        color: #6c757d !important;
-        text-transform: uppercase;
-        font-weight: 600;
-        margin-bottom: 5px;
-    }
-    .metric-value {
-        font-size: 1.6rem !important;
-        font-weight: 700;
-        color: #1e3c72 !important;
-    }
+.metric-value{
+    font-size:1.7rem;
+    font-weight:700;
+    color:var(--primary-color);
+}
 
-    /* 5. Sistem Mimarisi Kartı */
-    .architecture-card {
-        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%) !important;
-        padding: 15px;
-        border-radius: 12px;
-        margin-bottom: 20px;
-    }
-    .architecture-card h4 {
-        color: #ffffff !important;
-        margin-top: 0;
-        font-size: 0.95rem;
-        font-weight: 700;
-    }
+/* Sistem mimarisi kartı */
+.architecture-card{
+    background: linear-gradient(135deg,#1e3c72,#2a5298);
+    color:white;
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:20px;
+}
+
+.architecture-card *{
+    color:white !important;
+}
+
 </style>
 """, unsafe_allow_html=True)
 # --------------------------------------------------
@@ -455,6 +437,7 @@ if st.button(t["start_button"], use_container_width=True):
                 rapor = sonuc["rapor"]
                 test_sonucu = sonuc["analiz"]
                 status_box.update(label=t["status_complete"], state="complete", expanded=False)
+                
 
                 st.divider()
                 metin, kod = kodu_ayir(rapor)
@@ -464,12 +447,42 @@ if st.button(t["start_button"], use_container_width=True):
                     create_report_download_button(rapor)
 
                 if test_sonucu is not None:
-                    st.metric("Test", test_sonucu["test"])
-                    st.metric("p-değeri", test_sonucu["p"])
-                    st.info(test_sonucu["yorum"])
 
+                    p = test_sonucu["p"]
+
+                    if p < 0.001:
+                        p_text = "<0.001"
+                    else:
+                        p_text = f"{p:.4f}"
+
+                    col1, col2, col3 = st.columns(3)
+
+                    with col1:
+                        st.metric(
+            "🧪 Test",
+            test_sonucu["test"]
+        )
+
+                    with col2:
+                        st.metric(
+            "📈 İstatistik",
+            f'{test_sonucu["istatistik"]:.4f}'
+        )
+
+                    with col3:
+                        st.metric(
+            "🎯 p-değeri",
+            p_text
+        )
+
+                st.info(f"📌 {test_sonucu['karar']}")
+
+                st.success(test_sonucu["yorum"])
             except Exception as e:
                 status_box.update(label="❌ Hata Oluştu", state="error")
-                st.error("🚨 Yapay zekâ servisine şu anda ulaşılamıyor.")
+                st.error(
+    "🚨 Yapay zekâ servisi şu anda kullanılamıyor. "
+    "Lütfen birkaç dakika sonra tekrar deneyin."
+)
                 with st.expander("Teknik hata ayrıntısı"):
                     st.code(traceback.format_exc())  

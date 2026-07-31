@@ -9,7 +9,8 @@ def gorevleri_olustur(
     kullanici_sorusu,
     veri_ozeti,
     sutunlar,
-    veri_ornegi
+    veri_ornegi,
+    previous_memory=""
 ):
  
     # -------------------------------------------------
@@ -48,7 +49,20 @@ Sütunlar
 {veri_ornegi}
  
 --------------------------------------------------
- 
+Önceki analizler:
+
+Bu analizler aynı veri seti üzerinde daha önce yapılmıştır.
+
+Eğer mevcut soru önceki analizlerle ilişkiliyse
+bunlardan yararlan.
+
+Aksi halde yeni analizi bağımsız şekilde gerçekleştir.
+
+---------------------
+
+{previous_memory}
+
+------------------------------------
 Görevin:
  
 1. En uygun istatistiksel testi belirle.

@@ -86,7 +86,9 @@ ekip = Crew(
 )
 
 print("\n🚀 Ekip çalışmaya başlıyor...\n")
-result = ekip.kickoff()
+sonuc = ekip.kickoff()
+
+rapor = sonuc.tasks_output[1].raw
 
 print("\n🎯 --- NİHAİ ANALİZ METODOLOJİSİ --- 🎯\n")
-print(result)
+print(sonuc)
