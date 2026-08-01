@@ -42,17 +42,17 @@ StatAgent, kullanıcıların yüklediği CSV veya Excel veri setlerini yapay zek
 - OpenAI API
   
 # Sprint 1
-# Sprint Notları
+## Sprint Notları
 
 Sprint 1 kapsamında projenin temel mimarisi planlanmış ve Product Backlog oluşturulmuştur. Çok ajanlı sistem tasarımı belirlenmiş, ajanların görevleri tanımlanmış ve geliştirme ortamı hazırlanmıştır. Sprint boyunca öncelik, CrewAI tabanlı çalışan çekirdek sistemin oluşturulmasına verilmiştir.
 
-# Sprint İçinde Tamamlanması Tahmin Edilen Puan
+## Sprint İçinde Tamamlanması Tahmin Edilen Puan
 100 Puan
 
-# Puan Tamamlama Mantığı
+## Puan Tamamlama Mantığı
 Toplam Product Backlog yaklaşık 300 puan olarak planlanmıştır. Bootcamp süreci üç sprintten oluştuğu için her sprint yaklaşık 100 puanlık iş yükü içermektedir. Story puanları takım üyeleri tarafından ortak değerlendirme ile belirlenmiştir.
 
-# Sprint Backlog
+## Sprint Backlog
 Bu sprintte tamamlanması hedeflenen çalışmalar:
 - Product Backlog oluşturulması
 - GitHub repository oluşturulması
@@ -66,9 +66,7 @@ Bu sprintte tamamlanması hedeflenen çalışmalar:
 - İlk terminal tabanlı prototipin geliştirilmesi
 - CSV veri seti ile ilk testlerin gerçekleştirilmesi
 
-  
-# Daily Scrum
-
+## Daily Scrum
 Takım üyelerinin farklı ders programlarına sahip olması nedeniyle Daily Scrum toplantılarının Slack üzerinden gerçekleştirilmesine karar verilmiştir. Günlük toplantılarda tamamlanan görevler, karşılaşılan problemler ve ertesi gün yapılacak çalışmalar paylaşılmıştır.
 
 <img width="1335" height="780" alt="Screenshot 2026-07-05 151753" src="https://github.com/user-attachments/assets/38601246-fb70-4c30-b3d2-46c06a64fe09" />
@@ -76,15 +74,10 @@ Takım üyelerinin farklı ders programlarına sahip olması nedeniyle Daily Scr
 
 📄 [Daily Scrum Meeting Notes - Sprint 1](https://github.com/betulsinan/StatAgent/blob/main/DailyScrumMeetingNotesSprint1.pdf)
 
-
-# Sprint Board Update
-
+## Sprint Board Update
 <img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/558b7e08-cd6e-4309-b6bd-8c053f86cc69" />
 
-
-
-# Ürün Durumu
-
+## Ürün Durumu
 Sprint sonunda aşağıdaki çıktılar elde edilmiştir:
 - Proje mimarisi tamamlandı.
 - CrewAI tabanlı ajan yapısı oluşturuldu.
@@ -100,34 +93,31 @@ Sprint sonunda aşağıdaki çıktılar elde edilmiştir:
 <img width="1600" height="850" alt="WhatsApp Image 2026-07-03 at 4 54 52 PM (4)" src="https://github.com/user-attachments/assets/07d3a36e-98c0-4e4c-aaa5-c5852d7e999f" />
 <img width="1600" height="850" alt="WhatsApp Image 2026-07-03 at 4 54 52 PM" src="https://github.com/user-attachments/assets/6c9d3887-6f80-48b7-89ea-b8e6bcf45a74" />
 
-
-# Sprint Review
+## Sprint Review
 Sprint hedeflerinin büyük bölümü başarıyla tamamlanmıştır. Ajan mimarisinin beklendiği şekilde çalıştığı görülmüş ve terminal ortamında ilk analizler başarıyla gerçekleştirilmiştir. Bir sonraki sprintte sistemin Streamlit arayüzüne taşınmasına ve kullanıcı etkileşiminin geliştirilmesine karar verilmiştir.
 
-# Sprint Review Katılımcıları
+## Sprint Review Katılımcıları
 - Product Owner
 - Scrum Master
-
-
-# Sprint Retrospective
+- 
+## Sprint Retrospective
 Git commitlerinin daha küçük ve düzenli yapılması kararlaştırıldı.
 Kod dokümantasyonunun geliştirilmesine karar verildi.
 Bir sonraki sprintte Streamlit arayüzünün öncelikli geliştirme hedefi olması kararlaştırıldı.
 Memory (ChromaDB) entegrasyonunun Sprint 2'de tamamlanmasına karar verildi.
 
-
 # Sprint 2
-# Sprint Notları
+## Sprint Notları
 
 Sprint 2 (6 Temmuz - 19 Temmuz) kapsamında proje, terminal tabanlı bir prototipten kullanıcı dostu, web tabanlı bir ürüne dönüştürülmüştür. Bu sprintte öncelik, Streamlit tabanlı arayüzün geliştirilmesine ve istatistiksel görselleştirme yeteneklerinin güçlendirilmesine verilmiştir. Kılavuzda +15 ekstra puan kazandıran ajan hafızası (ChromaDB) özelliğinin bu sprintte tam olarak tamamlanamayacağı öngörülmüş ve bu iş kalemi Sprint 3'e ertelenmiştir.
 
-# Sprint İçinde Tamamlanması Tahmin Edilen Puan
+## Sprint İçinde Tamamlanması Tahmin Edilen Puan
 100 Puan
 
-# Puan Tamamlama Mantığı
+## Puan Tamamlama Mantığı
 Toplam Product Backlog yaklaşık 300 puan olarak planlanmıştır. Sprint 2, bootcamp sürecinin ikinci sprinti olduğu için yaklaşık 100 puanlık iş yükü hedeflenmiştir. Story puanları takım üyeleri tarafından ortak değerlendirme ile belirlenmiştir.
 
-# Sprint Backlog
+## Sprint Backlog
 Bu sprintte tamamlanması hedeflenen çalışmalar:
 - Streamlit tabanlı web arayüzünün tasarlanması ve geliştirilmesi
 - Sürükle-bırak yöntemiyle CSV veri seti yükleme alanının oluşturulması
@@ -139,18 +129,15 @@ Bu sprintte tamamlanması hedeflenen çalışmalar:
 - ~~ChromaDB tabanlı agent hafızası entegrasyonu~~ → **Sprint 3'e ertelendi**
 - Ortam değişkenlerinin (.env) güvenli şekilde yönetilmesi
 
-# Daily Scrum
-
+## Daily Scrum
 Sprint 1'de olduğu gibi Daily Scrum toplantıları Slack üzerinden gerçekleştirilmeye devam edilmiştir. Günlük toplantılarda tamamlanan görevler, karşılaşılan problemler ve ertesi gün yapılacak çalışmalar paylaşılmıştır.
 
 📄 [Daily Scrum Meeting Notes - Sprint 2](https://github.com/betulsinan/StatAgent/blob/main/DailyScrumMeetingNotesSprint2.pdf)
 
-# Sprint Board Update
-
+## Sprint Board Update
 <img width="1168" height="780" alt="Screenshot 2026-07-19 160612" src="https://github.com/user-attachments/assets/e3eb4a2f-9ecd-4464-8b6d-87846feb5e1c" />
 
-# Ürün Durumu
-
+## Ürün Durumu
 Sprint sonunda aşağıdaki çıktılar elde edilmiştir:
 - Streamlit tabanlı web arayüzü tamamlandı; kullanıcılar CSV dosyalarını sürükle-bırak ile yükleyebiliyor.
 - Analiz sonuçları görsel panel üzerinden şık butonlar, yan menüler ve Markdown formatında sunuluyor.
@@ -172,82 +159,78 @@ Sprint sonunda aşağıdaki çıktılar elde edilmiştir:
 <img width="1887" height="997" alt="Screenshot 2026-07-19 152719" src="https://github.com/user-attachments/assets/c4c3fa8e-04d7-446a-bf33-ead1b61efa1d" />
 <img width="1891" height="1008" alt="Screenshot 2026-07-19 152732" src="https://github.com/user-attachments/assets/b61223d0-7465-4285-a5cc-8832896778be" />
 
-
-
-
-# Sprint Review
+## Sprint Review
 Sprint hedeflerinin büyük bölümü başarıyla tamamlanmıştır. Streamlit arayüzü beklenen şekilde çalışmış, kullanıcılar veri yükleyip analiz sonuçlarını görsel olarak inceleyebilir hale gelmiştir. Ajan hafızası (ChromaDB) özelliğinin bu sprintte yetiştirilemeyeceği anlaşılmış ve kapsam planlaması gereği Sprint 3'e ertelenmesine karar verilmiştir. Bir sonraki sprintte öncelik, kısa ve uzun vadeli hafıza entegrasyonu ile ajan orkestrasyonunun tamamlanmasına verilecektir.
 
-# Sprint Review Katılımcıları
+## Sprint Review Katılımcıları
 - Product Owner
 - Scrum Master
 
-# Sprint Retrospective
+## Sprint Retrospective
 - .env dosyasının yanlışlıkla commit edilmesi sonucu GitHub Push Protection devreye girmiş; bu konuda .gitignore kullanımı ve hassas bilgi yönetimi konusunda farkındalık artırılmıştır.
 - Memory (ChromaDB) özelliğinin kapsamının Sprint 2 için fazla iddialı olduğu görülmüş, bir sonraki sprint planlamasında iş kalemlerinin daha gerçekçi tahmin edilmesine karar verilmiştir.
 - Commit'lerin daha küçük parçalar halinde ve daha sık yapılmasına karar verilmiştir.
 
 # Sprint 3
-# Sprint Notları
-
+## Sprint Notları
 Sprint 3 boyunca uygulamanın son kullanıcıya hazır hale getirilmesine odaklanılmıştır. Önceki sprintlerde geliştirilen çok ajanlı istatistiksel analiz altyapısı korunurken, kullanıcı deneyimi geliştirilmiş, hata düzeltmeleri yapılmış ve uygulamanın kararlılığı artırılmıştır. Ayrıca kullanıcıların aynı veri seti üzerinde gerçekleştirdikleri analizlere tekrar erişebilmesini sağlayan Analysis History özelliği uygulamaya eklenmiştir.
 
-# Sprint İçinde Tamamlanması Tahmin Edilen Puan
-
+## Sprint İçinde Tamamlanması Tahmin Edilen Puan
 100 Puan
 
-# Puan Tamamlama Mantığı
-
+## Puan Tamamlama Mantığı
 Toplam Product Backlog yaklaşık 300 puan olarak planlanmıştır. Sprint 3, projenin son geliştirme sprinti olup uygulamanın tamamlanması, kullanıcı deneyiminin iyileştirilmesi ve son özelliklerin eklenmesine odaklanılmıştır.
 
-# Daily Scrum
-
+## Daily Scrum
 Sprint boyunca ekip üyeleri günlük olarak iletişim halinde olmuş, tamamlanan görevler ve karşılaşılan problemler değerlendirilmiştir.
 
-# Sprint Board
+📄 [Daily Scrum Meeting Notes - Sprint 3](https://github.com/betulsinan/StatAgent/blob/main/DailyScrumMeetingNotesSprint3.pdf)
+
+## Sprint Board
 Tamamlanan User Story'ler
-Kullanıcı arayüzü iyileştirildi.
-İstatistiksel sonuçların gösterimi daha anlaşılır hale getirildi.
-AI tarafından oluşturulan açıklamalar geliştirildi.
-Analiz sonuçlarının daha düzenli sunulması sağlandı.
-Analysis History özelliği geliştirildi.
-Aynı veri seti üzerinde gerçekleştirilen analizlerin saklanması sağlandı.
-Geçmiş analizlerin Sidebar üzerinden görüntülenmesi eklendi.
-Kritik hata düzeltmeleri yapıldı.
-Uygulamanın genel kararlılığı artırıldı.
-README ve proje dokümantasyonu güncellendi.
+- Kullanıcı arayüzü iyileştirildi.
+- İstatistiksel sonuçların gösterimi daha anlaşılır hale getirildi.
+- AI tarafından oluşturulan açıklamalar geliştirildi.
+- Analiz sonuçlarının daha düzenli sunulması sağlandı.
+- Analysis History özelliği geliştirildi.
+- Aynı veri seti üzerinde gerçekleştirilen analizlerin saklanması sağlandı.
+- Geçmiş analizlerin Sidebar üzerinden görüntülenmesi eklendi.
+- Kritik hata düzeltmeleri yapıldı.
+- Uygulamanın genel kararlılığı artırıldı.
+- README ve proje dokümantasyonu güncellendi.
 
-# Ürün Durumu
-
+## Ürün Durumu
 Sprint sonunda StatAgent aşağıdaki özellikleri desteklemektedir:
+- CSV ve Excel dosyalarının yüklenmesi
+- Yapay zekâ destekli istatistiksel test seçimi
+- Otomatik hipotez oluşturulması
+- İstatistiksel analizlerin gerçekleştirilmesi
+- AI tarafından detaylı sonuç yorumlarının oluşturulması
+- Grafik destekli sonuç gösterimi
+- Aynı veri seti için geçmiş analizlerin saklanması
+- Sidebar üzerinden geçmiş analizlerin görüntülenmesi
+- Kullanıcı dostu Streamlit arayüzü
 
-CSV ve Excel dosyalarının yüklenmesi
-Yapay zekâ destekli istatistiksel test seçimi
-Otomatik hipotez oluşturulması
-İstatistiksel analizlerin gerçekleştirilmesi
-AI tarafından detaylı sonuç yorumlarının oluşturulması
-Grafik destekli sonuç gösterimi
-Aynı veri seti için geçmiş analizlerin saklanması
-Sidebar üzerinden geçmiş analizlerin görüntülenmesi
-Kullanıcı dostu Streamlit arayüzü
+<img width="1880" height="1013" alt="Screenshot 2026-08-01 192926" src="https://github.com/user-attachments/assets/be2d129e-78f1-4b9c-a780-a50268eb1ff5" />
+<img width="1879" height="1019" alt="Screenshot 2026-08-01 192950" src="https://github.com/user-attachments/assets/fa40ea42-b5b7-4fa4-aaf8-f5df7ce5b942" />
+<img width="1888" height="1014" alt="Screenshot 2026-08-01 193009" src="https://github.com/user-attachments/assets/077c9bad-cd74-44a7-8429-4a3941de9329" />
+<img width="1866" height="1015" alt="Screenshot 2026-08-01 193023" src="https://github.com/user-attachments/assets/eba8496f-2a10-43eb-a97e-b77e609899c2" />
+<img width="1881" height="1017" alt="Screenshot 2026-08-01 193035" src="https://github.com/user-attachments/assets/da5fbdf0-ee5c-4297-9340-d9e8d84cf4ec" />
+<img width="1879" height="1012" alt="Screenshot 2026-08-01 193155" src="https://github.com/user-attachments/assets/0a397ad0-e5fc-4e35-bbc8-e303e8ea22ee" />
+<img width="1881" height="1012" alt="Screenshot 2026-08-01 193208" src="https://github.com/user-attachments/assets/b55c8d83-dd63-48b1-b4b0-3030ec42c9e5" />
+<img width="1882" height="1020" alt="Screenshot 2026-08-01 193317" src="https://github.com/user-attachments/assets/1a0d0b47-f134-47a2-b82b-79f5b34cd2a3" />
+<img width="1877" height="1019" alt="Screenshot 2026-08-01 193341" src="https://github.com/user-attachments/assets/8719cd43-bf5b-4c71-bf45-6976c32a2305" />
 
-# Sprint Review
-
+## Sprint Review
 Sprint 3 sonunda StatAgent, kullanıcıların doğal dil kullanarak istatistiksel analiz gerçekleştirebildiği, uygun istatistiksel testi otomatik seçebildiği, sonuçları yorumlayabildiği ve aynı veri seti üzerinde gerçekleştirdikleri analizlere daha sonra tekrar ulaşabildiği çalışan bir yapay zekâ destekli istatistik platformu haline getirilmiştir. Son sprintte ağırlıklı olarak kullanıcı deneyimi, uygulama kararlılığı ve son özelliklerin tamamlanmasına odaklanılmıştır.
 
-# Sprint Review Katılımcıları
+## Sprint Review Katılımcıları
 Product Owner
 Scrum Master
 
-# Sprint Retrospective
-Güçlü Yönler
+## Sprint Retrospective
 Çok ajanlı mimari sayesinde modüler geliştirme süreci başarıyla tamamlandı.
 Uygulamanın kararlılığı önemli ölçüde artırıldı.
 Analysis History özelliği başarılı şekilde sisteme entegre edildi.
 Kullanıcı deneyimi önceki sprintlere göre önemli ölçüde geliştirildi.
-Gelecek Sprintlerde Yapılabilecek Geliştirmeler
-PDF rapor çıktısı oluşturulması
-Daha fazla istatistiksel test desteği
-Gelişmiş veri görselleştirmeleri
-Bulut tabanlı analiz geçmişi desteği
-Kullanıcı hesap sistemi ve senkronizasyon
+
