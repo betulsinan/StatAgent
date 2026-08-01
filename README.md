@@ -186,3 +186,68 @@ Sprint hedeflerinin büyük bölümü başarıyla tamamlanmıştır. Streamlit a
 - .env dosyasının yanlışlıkla commit edilmesi sonucu GitHub Push Protection devreye girmiş; bu konuda .gitignore kullanımı ve hassas bilgi yönetimi konusunda farkındalık artırılmıştır.
 - Memory (ChromaDB) özelliğinin kapsamının Sprint 2 için fazla iddialı olduğu görülmüş, bir sonraki sprint planlamasında iş kalemlerinin daha gerçekçi tahmin edilmesine karar verilmiştir.
 - Commit'lerin daha küçük parçalar halinde ve daha sık yapılmasına karar verilmiştir.
+
+# Sprint 3
+# Sprint Notları
+
+Sprint 3 boyunca uygulamanın son kullanıcıya hazır hale getirilmesine odaklanılmıştır. Önceki sprintlerde geliştirilen çok ajanlı istatistiksel analiz altyapısı korunurken, kullanıcı deneyimi geliştirilmiş, hata düzeltmeleri yapılmış ve uygulamanın kararlılığı artırılmıştır. Ayrıca kullanıcıların aynı veri seti üzerinde gerçekleştirdikleri analizlere tekrar erişebilmesini sağlayan Analysis History özelliği uygulamaya eklenmiştir.
+
+# Sprint İçinde Tamamlanması Tahmin Edilen Puan
+
+100 Puan
+
+# Puan Tamamlama Mantığı
+
+Toplam Product Backlog yaklaşık 300 puan olarak planlanmıştır. Sprint 3, projenin son geliştirme sprinti olup uygulamanın tamamlanması, kullanıcı deneyiminin iyileştirilmesi ve son özelliklerin eklenmesine odaklanılmıştır.
+
+# Daily Scrum
+
+Sprint boyunca ekip üyeleri günlük olarak iletişim halinde olmuş, tamamlanan görevler ve karşılaşılan problemler değerlendirilmiştir.
+
+# Sprint Board
+Tamamlanan User Story'ler
+Kullanıcı arayüzü iyileştirildi.
+İstatistiksel sonuçların gösterimi daha anlaşılır hale getirildi.
+AI tarafından oluşturulan açıklamalar geliştirildi.
+Analiz sonuçlarının daha düzenli sunulması sağlandı.
+Analysis History özelliği geliştirildi.
+Aynı veri seti üzerinde gerçekleştirilen analizlerin saklanması sağlandı.
+Geçmiş analizlerin Sidebar üzerinden görüntülenmesi eklendi.
+Kritik hata düzeltmeleri yapıldı.
+Uygulamanın genel kararlılığı artırıldı.
+README ve proje dokümantasyonu güncellendi.
+
+# Ürün Durumu
+
+Sprint sonunda StatAgent aşağıdaki özellikleri desteklemektedir:
+
+CSV ve Excel dosyalarının yüklenmesi
+Yapay zekâ destekli istatistiksel test seçimi
+Otomatik hipotez oluşturulması
+İstatistiksel analizlerin gerçekleştirilmesi
+AI tarafından detaylı sonuç yorumlarının oluşturulması
+Grafik destekli sonuç gösterimi
+Aynı veri seti için geçmiş analizlerin saklanması
+Sidebar üzerinden geçmiş analizlerin görüntülenmesi
+Kullanıcı dostu Streamlit arayüzü
+
+# Sprint Review
+
+Sprint 3 sonunda StatAgent, kullanıcıların doğal dil kullanarak istatistiksel analiz gerçekleştirebildiği, uygun istatistiksel testi otomatik seçebildiği, sonuçları yorumlayabildiği ve aynı veri seti üzerinde gerçekleştirdikleri analizlere daha sonra tekrar ulaşabildiği çalışan bir yapay zekâ destekli istatistik platformu haline getirilmiştir. Son sprintte ağırlıklı olarak kullanıcı deneyimi, uygulama kararlılığı ve son özelliklerin tamamlanmasına odaklanılmıştır.
+
+# Sprint Review Katılımcıları
+Product Owner
+Scrum Master
+
+# Sprint Retrospective
+Güçlü Yönler
+Çok ajanlı mimari sayesinde modüler geliştirme süreci başarıyla tamamlandı.
+Uygulamanın kararlılığı önemli ölçüde artırıldı.
+Analysis History özelliği başarılı şekilde sisteme entegre edildi.
+Kullanıcı deneyimi önceki sprintlere göre önemli ölçüde geliştirildi.
+Gelecek Sprintlerde Yapılabilecek Geliştirmeler
+PDF rapor çıktısı oluşturulması
+Daha fazla istatistiksel test desteği
+Gelişmiş veri görselleştirmeleri
+Bulut tabanlı analiz geçmişi desteği
+Kullanıcı hesap sistemi ve senkronizasyon
