@@ -199,6 +199,8 @@ Tamamlanan User Story'ler
 - Uygulamanın genel kararlılığı artırıldı.
 - README ve proje dokümantasyonu güncellendi.
 
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/0422b64e-0d4d-47ef-9480-1abec59f177b" />
+
 ## Ürün Durumu
 Sprint sonunda StatAgent aşağıdaki özellikleri desteklemektedir:
 - CSV ve Excel dosyalarının yüklenmesi
@@ -225,12 +227,12 @@ Sprint sonunda StatAgent aşağıdaki özellikleri desteklemektedir:
 Sprint 3 sonunda StatAgent, kullanıcıların doğal dil kullanarak istatistiksel analiz gerçekleştirebildiği, uygun istatistiksel testi otomatik seçebildiği, sonuçları yorumlayabildiği ve aynı veri seti üzerinde gerçekleştirdikleri analizlere daha sonra tekrar ulaşabildiği çalışan bir yapay zekâ destekli istatistik platformu haline getirilmiştir. Son sprintte ağırlıklı olarak kullanıcı deneyimi, uygulama kararlılığı ve son özelliklerin tamamlanmasına odaklanılmıştır.
 
 ## Sprint Review Katılımcıları
-Product Owner
-Scrum Master
+- Product Owner
+- Scrum Master
 
 ## Sprint Retrospective
-Çok ajanlı mimari sayesinde modüler geliştirme süreci başarıyla tamamlandı.
-Uygulamanın kararlılığı önemli ölçüde artırıldı.
-Analysis History özelliği başarılı şekilde sisteme entegre edildi.
-Kullanıcı deneyimi önceki sprintlere göre önemli ölçüde geliştirildi.
+- Çok ajanlı mimari sayesinde modüler geliştirme süreci başarıyla tamamlandı.
+- Uygulamanın kararlılığı önemli ölçüde artırıldı.
+- Analysis History özelliği başarılı şekilde sisteme entegre edildi.
+- Kullanıcı deneyimi önceki sprintlere göre önemli ölçüde geliştirildi.
 
