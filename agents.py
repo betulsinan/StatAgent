@@ -13,7 +13,7 @@ from crewai import Agent, LLM
 load_dotenv()
 
 gemini_llm = LLM(
-    model="openrouter/deepseek/deepseek-chat-v3",
+    model="gemini/gemini-2.5-flash",
     api_key=os.getenv("GEMINI_API_KEY")
 )
 # ==================================================

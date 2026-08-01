@@ -17,7 +17,7 @@ def get_dataset_id(df):
     return hashlib.md5(csv_text.encode()).hexdigest()
 
 
-def save_analysis(dataset_id, question, answer):
+def save_analysis(dataset_id, question, report, analysis_result):
     """
     Saves a completed analysis.
     """
@@ -28,21 +28,57 @@ def save_analysis(dataset_id, question, answer):
         ids=[doc_id],
         documents=[
 f"""
-Soru:
+# ❓ Soru
+
 {question}
 
-Cevap:
-{answer}
+---
+
+# 📊 Test
+
+{analysis_result["test"]}
+
+---
+
+# 🤖 AI Raporu
+
+{report}
 """
 ],
         metadatas=[
-            {
-                "dataset": dataset_id,
-                "question": question
-            }
-        ]
+    {
+        "dataset": dataset_id,
+        "question": question,
+        "test": analysis_result["test"]
+    }
+]
     )
 
+def get_history(dataset_id):
+    """
+    Returns all previous analyses for the current dataset.
+    """
+
+    results = collection.get(
+        where={"dataset": dataset_id},
+        include=["documents", "metadatas"]
+    )
+
+    history = []
+
+    if results["documents"] is None:
+        return history
+
+    for doc, meta in zip(results["documents"], results["metadatas"]):
+        history.append(
+            {
+                "question": meta["question"],
+                "test": meta.get("test", "Unknown"),
+                "report": doc
+            }
+        )
+
+    return history
 
 def retrieve_memory(dataset_id, question, n_results=3):
     """

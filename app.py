@@ -3,9 +3,13 @@ import traceback
 import matplotlib.pyplot as plt
 import pandas as pd
 import streamlit as st
-
+from memory import get_history, get_dataset_id
 from analysis import analizi_baslat
-from memory import save_analysis, retrieve_memory
+from memory import (
+    get_history,
+    get_dataset_id,
+    save_analysis
+)
 
 from utils import (
     veri_yukle,
@@ -353,9 +357,25 @@ uploaded_file = st.file_uploader(
     t["upload_label"],
     type=["csv", "xlsx"]
 )
-
 if uploaded_file is not None:
     df = veri_yukle(uploaded_file)
+    dataset_id = get_dataset_id(df)
+    history = get_history(dataset_id)
+    with st.sidebar:
+
+        st.markdown("## 📚 Önceki Analizler")
+
+        if len(history) == 0:
+            st.caption("No previous analyses yet.")
+
+        else:
+            for item in reversed(history):
+
+                with st.expander(item["question"]):
+
+                    st.caption(f"🧪 {item['test']}")
+
+                    st.markdown(item["report"])
     is_valid, msg, missing_info = validate_dataframe(df)
     if not is_valid:
         st.error(f"❌ {msg}")

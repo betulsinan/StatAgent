@@ -4,7 +4,8 @@ from crewai import Crew, Process
 from memory import (
     get_dataset_id,
     retrieve_memory,
-    save_analysis
+    save_analysis,
+    get_history
 )
 print("ANALYSIS.PY ÇALIŞTI")
 from statistics_engine import (
@@ -95,7 +96,7 @@ def analizi_baslat(df, kullanici_sorusu):
 
     veri_ornegi = df.head().to_markdown(index=False)
     dataset_id = get_dataset_id(df)
-
+    history = get_history(dataset_id)
     previous_memory = retrieve_memory(
     dataset_id,
     kullanici_sorusu
